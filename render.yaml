@@ -4,7 +4,7 @@ services:
     runtime: python
     repo: https://github.com/cycy4016-star/grac_project
     plan: free
-    buildCommand: CARGO_HOME=/tmp/cargo pip install -r requirements-prod.txt
+    buildCommand: export CARGO_HOME=/tmp/cargo && pip install -r requirements-prod.txt
     startCommand: python start_render.py
     healthCheckPath: /
     envVars:
