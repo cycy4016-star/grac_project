@@ -2,7 +2,7 @@ services:
   - type: web
     name: grac-compliance
     runtime: python
-    repo: https://github.com/YOUR_USERNAME/grac_project
+    repo: https://github.com/cycy4016-star/grac_project
     plan: free
     buildCommand: pip install -r requirements-prod.txt
     startCommand: python start_render.py
