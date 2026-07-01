@@ -1,11 +1,9 @@
 services:
   - type: web
     name: grac-compliance
-    runtime: python
+    runtime: docker
     repo: https://github.com/cycy4016-star/grac_project
     plan: free
-    buildCommand: export CARGO_HOME=/tmp/cargo PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1 && pip install -r requirements-prod.txt
-    startCommand: python start_render.py
     healthCheckPath: /
     envVars:
       - key: NVIDIA_API_KEY
