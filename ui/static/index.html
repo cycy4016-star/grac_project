@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRaC — Governance, Risk & Compliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- Silicon voice overlay -->
+  <div id="voice-overlay" class="voice-overlay" style="display:none">
+    <div class="voice-backdrop"></div>
+    <div class="voice-orb-container">
+      <div class="voice-orb">
+        <div class="voice-orb-inner"></div>
+        <div class="voice-orb-ring"></div>
+        <div class="voice-orb-ring voice-orb-ring-2"></div>
+        <div class="voice-orb-ring voice-orb-ring-3"></div>
+      </div>
+      <div class="voice-label">
+        <div class="voice-dot-active"></div>
+        <span id="voice-label-text">Listening</span>
+      </div>
+      <p class="voice-hint">Speak naturally — GRaC will understand</p>
+      <div class="voice-waveform-bars">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <button class="voice-close-btn" onclick="App.stopVoice()" title="Stop listening">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-symbol">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="url(#logoGrad)"/>
+          <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">GRaC</span>
+        <span class="logo-sub">Compliance Intelligence</span>
+      </div>
+    </div>
+
+    <button class="new-chat-btn" onclick="App.newChat()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      New conversation
+    </button>
+
+    <div class="sidebar-section">
+      <div class="section-label">Conversations</div>
+      <div id="chat-list" class="chat-list"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sector-selector">
+        <label>Sector</label>
+        <div class="sector-select-wrapper">
+          <select id="sector-select" onchange="App.switchSector(this.value)">
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="fintech">Fintech</option>
+            <option value="data_protection">Data Protection</option>
+            <option value="healthcare">Healthcare</option>
+          </select>
+          <svg class="select-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div id="sector-status" class="sector-status">
+          <span class="status-dot"></span>
+          <span class="status-text">Loading...</span>
+        </div>
+      </div>
+      <div id="sector-laws" class="sector-laws"></div>
+      <button class="sidebar-upload-btn" onclick="App.openLawUpload()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Upload Law
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main id="main" class="main">
+    <header class="topbar">
+      <button class="sidebar-toggle" onclick="App.toggleSidebar()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="topbar-center">
+        <div id="topbar-sector-badge" class="sector-badge">Cybersecurity</div>
+        <div id="sector-badge-indicator" class="sector-badge-indicator"></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" onclick="App.toggleKnowledgePanel()" title="Law Library">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3h5v12H3z" stroke="currentColor" stroke-width="1.5" rx="1"/><path d="M10 3h5v12h-5z" stroke="currentColor" stroke-width="1.5" rx="1"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Knowledge panel slide-down -->
+    <div id="knowledge-panel" class="knowledge-panel" style="display:none">
+      <div class="knowledge-header">
+        <h3>Law Library</h3>
+        <button class="icon-btn" onclick="App.toggleKnowledgePanel()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div id="knowledge-body" class="knowledge-body"></div>
+    </div>
+
+    <!-- Action tabs -->
+    <div id="action-tabs" class="action-tabs">
+      <button class="tab-btn active" data-tab="chat" onclick="App.switchTab('chat')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1a7 7 0 0 0-7 7c0 1.3.36 2.52 1 3.56L1.5 14.5l3.94-1.5A7 7 0 1 0 8 1z" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+        Chat
+      </button>
+      <button class="tab-btn" data-tab="analyze" onclick="App.switchTab('analyze')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3h12v10H2z" stroke="currentColor" stroke-width="1.3" fill="none" rx="1"/><path d="M5 7l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Analyze
+      </button>
+      <button class="tab-btn" data-tab="draft" onclick="App.switchTab('draft')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3z" stroke="currentColor" stroke-width="1.3" fill="none" rx="1"/><path d="M5 8h6M5 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Draft
+      </button>
+      <button class="tab-btn" data-tab="audit" onclick="App.switchTab('audit')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Audit
+      </button>
+      <button class="tab-btn" data-tab="knowledge" onclick="App.switchTab('knowledge')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3h5v10H2z" stroke="currentColor" stroke-width="1.3" rx="1"/><path d="M9 3h5v10H9z" stroke="currentColor" stroke-width="1.3" rx="1"/></svg>
+        Knowledge
+      </button>
+    </div>
+
+    <!-- Content area -->
+    <div id="content-area" class="content-area">
+      <!-- Welcome -->
+      <div id="welcome" class="welcome">
+        <div class="welcome-graphic">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <rect width="56" height="56" rx="14" fill="url(#welcomeGrad)" opacity="0.12"/>
+            <path d="M18 28l6 6 14-14" stroke="url(#welcomeGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs><linearGradient id="welcomeGrad" x1="0" y1="0" x2="56" y2="56"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+          </svg>
+        </div>
+        <h1>How can I help you today?</h1>
+        <p class="welcome-sub">Governance, risk and compliance intelligence for Ghanaian law. Ask a question, analyze a policy, or let us research together.</p>
+        <div class="suggested-chips" id="suggested-chips">
+          <button class="chip" onclick="App.ask('What are the key requirements of the Cybersecurity Act 1038?')">Cybersecurity Act 1038</button>
+          <button class="chip" onclick="App.ask('What are the data protection obligations under Act 843?')">Data Protection Act 843</button>
+          <button class="chip" onclick="App.ask('What fintech regulations apply to mobile money in Ghana?')">Fintech Regulations</button>
+          <button class="chip" onclick="App.ask('How do I conduct a DPIA under Ghanaian law?')">DPIA Requirements</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div id="chat-messages" class="chat-messages" style="display:none"></div>
+
+      <!-- Analyze tab -->
+      <div id="tab-analyze" class="tab-content" style="display:none">
+        <div class="tab-content-inner">
+          <h2>Analyze a Document</h2>
+          <p class="tab-desc">Upload a PDF, DOCX or TXT document for compliance gap analysis against <span id="analyze-sector-label">Cybersecurity</span> requirements.</p>
+          <div class="upload-zone" id="analyze-upload-zone" ondragover="App.dragOver(event)" ondrop="App.dropAnalyzeFile(event)" ondragleave="App.dragLeave(event)" onclick="document.getElementById('analyze-file-input').click()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Drop a document here or click to browse</span>
+            <input type="file" id="analyze-file-input" accept=".pdf,.docx,.txt" hidden onchange="App.handleAnalyzeFile(event)">
+          </div>
+          <div id="analyze-file-info" class="file-info" style="display:none"></div>
+          <div class="tab-or-divider"><span>or paste text</span></div>
+          <textarea id="analyze-text" class="tab-textarea" rows="5" placeholder="Paste policy text here for analysis..."></textarea>
+          <button class="tab-action-btn" onclick="App.runAnalyze()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 7l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Run Analysis
+          </button>
+        </div>
+      </div>
+
+      <!-- Draft tab -->
+      <div id="tab-draft" class="tab-content" style="display:none">
+        <div class="tab-content-inner">
+          <h2>Draft a Policy</h2>
+          <p class="tab-desc">Generate a professional compliance policy PDF for <span id="draft-sector-label">Cybersecurity</span>.</p>
+          <textarea id="draft-topic" class="tab-textarea" rows="4" placeholder="Describe the policy you need. For example: A data breach notification policy for a fintech company handling customer payment data..."></textarea>
+          <button class="tab-action-btn" onclick="App.runDraft()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3z" stroke="currentColor" stroke-width="1.3" fill="none" rx="1"/><path d="M5 8h6M5 11h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Generate Draft
+          </button>
+        </div>
+      </div>
+
+      <!-- Audit tab -->
+      <div id="tab-audit" class="tab-content" style="display:none">
+        <div class="tab-content-inner">
+          <h2>Compliance Audit</h2>
+          <p class="tab-desc">Full compliance audit with gap analysis and scoring against <span id="audit-sector-label">Cybersecurity</span> requirements.</p>
+          <div class="upload-zone" id="audit-upload-zone" ondragover="App.dragOver(event)" ondrop="App.dropAuditFile(event)" ondragleave="App.dragLeave(event)" onclick="document.getElementById('audit-file-input').click()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Drop a document here or click to browse</span>
+            <input type="file" id="audit-file-input" accept=".pdf,.docx,.txt" hidden onchange="App.handleAuditFile(event)">
+          </div>
+          <div id="audit-file-info" class="file-info" style="display:none"></div>
+          <div class="tab-or-divider"><span>or paste text</span></div>
+          <textarea id="audit-text" class="tab-textarea" rows="5" placeholder="Paste policy text here for a full compliance audit..."></textarea>
+          <button class="tab-action-btn" onclick="App.runAudit()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Run Audit
+          </button>
+        </div>
+      </div>
+
+      <!-- Knowledge tab -->
+      <div id="tab-knowledge" class="tab-content" style="display:none">
+        <div class="tab-content-inner">
+          <h2>Knowledge Base</h2>
+          <p class="tab-desc">Manage the laws and regulations GRaC knows. Upload PDFs, ingest them, and monitor sector readiness.</p>
+          <div class="kb-upload-area">
+            <div class="upload-zone" id="kb-upload-zone" ondragover="App.dragOver(event)" ondrop="App.dropLawFile(event)" ondragleave="App.dragLeave(event)" onclick="document.getElementById('kb-file-input').click()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Drop a law PDF here to add to <strong id="kb-sector-label">Cybersecurity</strong></span>
+              <input type="file" id="kb-file-input" accept=".pdf" hidden onchange="App.handleLawFile(event)">
+            </div>
+            <div id="kb-file-info" class="file-info" style="display:none"></div>
+            <button class="tab-action-btn" id="kb-ingest-btn" onclick="App.runIngest()" style="display:none">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Ingest All Laws
+            </button>
+          </div>
+          <div id="kb-sector-list" class="kb-sector-list"></div>
+        </div>
+      </div>
+
+      <!-- Thinking indicator -->
+      <div id="thinking-indicator" class="thinking" style="display:none">
+        <div class="thinking-header">
+          <div class="thinking-avatar-think">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1a7 7 0 0 0-7 7c0 1.3.36 2.52 1 3.56L1.5 14.5l3.94-1.5A7 7 0 1 0 8 1z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+          </div>
+          <div class="thinking-title">
+            <span class="thinking-name">GRaC</span>
+            <span class="thinking-status" id="thinking-status">Working...</span>
+          </div>
+          <div class="thinking-dots">
+            <span class="tdot"></span>
+            <span class="tdot"></span>
+            <span class="tdot"></span>
+          </div>
+        </div>
+        <div class="thinking-steps" id="thinking-steps"></div>
+      </div>
+    </div>
+
+    <!-- Input area -->
+    <div class="input-area" id="input-area">
+      <div class="input-wrapper">
+        <button class="input-tool-btn attach-btn" onclick="App.triggerFileUpload()" title="Attach document">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 5v8M5 9h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <textarea id="chat-input" rows="1" placeholder="Ask a compliance question..." onkeydown="App.handleKey(event)" oninput="App.onInputChange()"></textarea>
+        <button id="voice-btn" class="input-tool-btn voice-btn" onclick="App.toggleVoice()" title="Voice input">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1a4 4 0 0 0-4 4v4a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4z" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M3 9a6 6 0 0 0 12 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </button>
+        <button id="send-btn" class="send-btn" onclick="App.sendMessage()" disabled>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9l12-6-6 12-2-4-4-2z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <p class="input-footer">GRaC references Ghanaian law sources. Responses are AI-generated — verify critical information.</p>
+    </div>
+
+    <input type="file" id="file-input" accept=".pdf,.docx,.txt" hidden onchange="App.handleFileSelect(event)">
+  </main>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

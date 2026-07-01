@@ -1,0 +1,61 @@
+# Core dependencies
+python-dotenv
+pydantic
+
+# PDF Processing
+pdfplumber
+pypdf>=4
+pymupdf>=1.25.0
+
+# Vector Database
+chromadb
+sentence-transformers
+
+# LLM & Agents
+anthropic
+crewai
+langchain
+langchain-anthropic
+langchain-community
+
+# Document Generation
+reportlab
+python-docx
+
+# API & Web
+fastapi
+uvicorn
+pydantic-settings
+
+# Audio Processing (Voice)
+openai
+pydub
+
+# Data Processing
+pandas
+numpy
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# Utilities
+requests
+python-multipart
+aiofiles
+beautifulsoup4
+lxml
+
+# Testing
+pytest
+pytest-asyncio
+pytest-cov
+
+# Development
+black
+flake8
+mypy
+pre-commit
+
+# Logging
+python-json-logger

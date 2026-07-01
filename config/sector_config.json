@@ -1,0 +1,66 @@
+{
+  "sectors": [
+    {
+      "id": "cybersecurity",
+      "name": "Cybersecurity",
+      "description": "Cybersecurity incident response, penetration testing, security policies",
+      "laws": [
+        "Act 1038 - Cybersecurity Act, 2020",
+        "BoG CISD 2026 - Cybersecurity Incident and Suspicious Activity Directive",
+        "Act 843 - Data Protection Act, 2012 (relevant sections)"
+      ],
+      "applicable_industries": ["fintech", "banking", "telecommunications", "government"],
+      "enabled": true
+    },
+    {
+      "id": "fintech",
+      "name": "Financial Technology",
+      "description": "Financial sector compliance, fintech regulations, payment systems",
+      "laws": [
+        "Banking Act",
+        "BoG Directives on Financial Services",
+        "Act 843 - Data Protection Act, 2012",
+        "Act 1038 - Cybersecurity Act, 2020 (relevant sections)"
+      ],
+      "applicable_industries": ["fintech", "banking", "payment_processing"],
+      "enabled": true
+    },
+    {
+      "id": "data_protection",
+      "name": "Data Protection",
+      "description": "Personal data handling, privacy, data subject rights",
+      "laws": [
+        "Act 843 - Data Protection Act, 2012",
+        "Ghana Constitution Article 18(2) - Right to Privacy"
+      ],
+      "applicable_industries": ["all"],
+      "enabled": true
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "description": "Healthcare data, patient privacy, medical records, public health regulations",
+      "laws": [
+        "Health Institutions and Facilities Act, 2011 (Act 829)",
+        "Public Health Act, 2012 (Act 851)",
+        "Data Protection Act, 2012 (Act 843) - healthcare provisions"
+      ],
+      "applicable_industries": ["healthcare", "pharmaceutical"],
+      "enabled": true
+    },
+    {
+      "id": "telecom",
+      "name": "Telecommunications",
+      "description": "Telecom regulations, network security, customer data",
+      "laws": [],
+      "applicable_industries": ["telecommunications"],
+      "enabled": false
+    }
+  ],
+  "sector_mapping": {
+    "fintech": ["data_protection", "cybersecurity"],
+    "banking": ["data_protection", "cybersecurity"],
+    "telecommunications": ["data_protection", "cybersecurity"]
+  },
+  "default_sector": "cybersecurity"
+}

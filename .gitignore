@@ -1,0 +1,77 @@
+# Environment
+.env
+.env.local
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data & Logs
+data/logs/
+data/cache/*
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Project specific
+.mypy_cache/
+.hypothesis/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# GitHub workflows (no CI running)
+.github/
+
+# Documentation
+docs/_build/
+site/
+
+# Data artifacts — vectorstore & DBs regenerated on deploy
+data/vectorstore/
+data/grac.db
+data/cache/
+data/output/
+
+# Duplicate project directory (older version)
+grac_project/
+
+# Root log files
+*.log
+!docs/*.log
+
+# Data subdirectories — chunks & parsed text regenerated from raw PDFs
+data/laws/*/chunks/
+data/laws/*/parsed/

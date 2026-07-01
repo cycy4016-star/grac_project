@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRaC Operations Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+<div id="admin-app">
+  <nav id="admin-sidebar">
+    <div class="admin-logo">
+      GRaC
+      <span class="admin-logo-sub">Operations Console</span>
+    </div>
+    <div class="admin-nav">
+      <button class="nav-item active" data-view="terminal" onclick="switchView('terminal')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        Terminal
+      </button>
+      <button class="nav-item" data-view="dashboard" onclick="switchView('dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-view="knowledge" onclick="switchView('knowledge')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Knowledge
+      </button>
+    </div>
+    <div class="admin-footer">
+      <a href="/" class="back-link">&larr; Client UI</a>
+    </div>
+  </nav>
+
+  <main id="admin-main">
+    <!-- TERMINAL VIEW -->
+    <div class="admin-view active" id="view-terminal">
+      <div id="terminal-container">
+        <div id="terminal-output"></div>
+        <div id="terminal-input-line">
+          <span id="terminal-prompt">grac-admin&gt;</span>
+          <input type="text" id="terminal-input" autofocus spellcheck="false" autocomplete="off" placeholder="type help for commands">
+          <button id="term-upload-btn" title="Upload PDF" onclick="onUploadBtnClick(event)">+ Upload</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div class="admin-view" id="view-dashboard"></div>
+
+    <!-- KNOWLEDGE VIEW -->
+    <div class="admin-view" id="view-knowledge"></div>
+  </main>
+</div>
+
+<!-- File input is created dynamically by JS on each upload -->
+
+<script src="/admin/js/admin.js"></script>
+</body>
+</html>

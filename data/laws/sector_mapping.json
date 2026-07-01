@@ -1,0 +1,32 @@
+{
+  "sector_relationships": {
+    "fintech": {
+      "includes": ["cybersecurity", "data_protection"],
+      "description": "Financial technology companies must comply with banking, data protection, and cybersecurity laws"
+    },
+    "banking": {
+      "includes": ["cybersecurity", "data_protection"],
+      "description": "Banks must comply with financial, cybersecurity, and data protection regulations"
+    },
+    "cybersecurity": {
+      "overlaps_with": ["data_protection"],
+      "description": "Cybersecurity professionals must consider data protection laws in incident response"
+    },
+    "healthcare": {
+      "includes": ["data_protection", "cybersecurity"],
+      "description": "Healthcare providers must comply with patient privacy and security laws"
+    }
+  },
+  "cross_sector_laws": {
+    "Act 843": {
+      "applies_to": ["all"],
+      "category": "Data Protection",
+      "relevance": "fundamental"
+    },
+    "Act 1038": {
+      "applies_to": ["cybersecurity", "fintech", "banking", "healthcare"],
+      "category": "Cybersecurity",
+      "relevance": "fundamental"
+    }
+  }
+}

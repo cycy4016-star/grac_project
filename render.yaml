@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: grac-compliance
+    runtime: python
+    repo: https://github.com/YOUR_USERNAME/grac_project
+    plan: free
+    buildCommand: pip install -r requirements-prod.txt
+    startCommand: python start_render.py
+    healthCheckPath: /
+    envVars:
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: EMBEDDING_PROVIDER
+        value: nvidia
+      - key: EMBEDDING_API_MODEL
+        value: nvidia/nv-embed-v1
+      - key: LLM_PROVIDER
+        value: auto
+      - key: ACTIVE_SECTOR
+        value: cybersecurity
+      - key: ENABLE_MULTI_SECTOR
+        value: "False"
+      - key: MONITOR_ENABLED
+        value: "False"
+      - key: MIN_RETRIEVAL_CONFIDENCE
+        value: "0.6"
+      - key: MIN_ANSWER_CONFIDENCE
+        value: "0.7"
+      - key: API_DEBUG
+        value: "False"

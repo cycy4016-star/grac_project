@@ -1,0 +1,122 @@
+grac/
+├── main.py                          # Entry point
+├── requirements.txt                 # Dependencies
+├── .env.example                     # Environment variables template
+├── .gitignore                       # Git ignore rules
+│
+├── config/
+│   ├── __init__.py
+│   ├── settings.py                  # Global settings
+│   ├── sector_config.json           # Sector definitions
+│   ├── agent_config.json            # Agent-specific config
+│   └── logging_config.py            # Logging setup
+│
+├── data/
+│   ├── laws/
+│   │   ├── cybersecurity/
+│   │   │   ├── raw/                 (Act 1038, BoG CISD PDFs)
+│   │   │   ├── parsed/              (Extracted text)
+│   │   │   ├── chunks/              (Structured sections)
+│   │   │   └── registry.json
+│   │   ├── fintech/
+│   │   │   ├── raw/
+│   │   │   ├── parsed/
+│   │   │   ├── chunks/
+│   │   │   └── registry.json
+│   │   ├── data_protection/
+│   │   │   ├── raw/
+│   │   │   ├── parsed/
+│   │   │   ├── chunks/
+│   │   │   └── registry.json
+│   │   └── sector_mapping.json      (Cross-sector law mapping)
+│   │
+│   ├── vectorstore/                 (ChromaDB storage)
+│   ├── cache/                       (Temporary processing files)
+│   └── logs/                        (Agent execution logs)
+│
+├── agents/
+│   ├── __init__.py
+│   ├── supervisor.py                # Orchestrates all agents
+│   ├── ingestor.py                  # PDF → Text extraction
+│   ├── parser.py                    # Text → Structured hierarchy
+│   ├── embedder.py                  # Chunks → Vectors → ChromaDB
+│   ├── retriever.py                 # Query → Relevant law sections
+│   ├── analyzer.py                  # Policy vs Laws → Gaps
+│   ├── writer.py                    # Gaps → Professional documents
+│   ├── transcriber.py               # Audio → Text
+│   ├── scorer.py                    # Policy → Compliance score
+│   └── base_agent.py                # Base class for all agents
+│
+├── tools/
+│   ├── __init__.py
+│   ├── pdf_tools.py                 # Tools for ingestor agent
+│   ├── parsing_tools.py             # Regex, hierarchy detection
+│   ├── embedding_tools.py           # Vector creation
+│   ├── retrieval_tools.py           # ChromaDB queries
+│   ├── analysis_tools.py            # Gap detection logic
+│   ├── generation_tools.py          # Document formatting
+│   └── validation_tools.py          # Confidence scoring
+│
+├── skills/
+│   ├── cybersecurity/
+│   │   ├── pentest_report.md        # Pentest report template
+│   │   ├── incident_response.md     # Breach notification template
+│   │   ├── policy_draft.md          # Security policy template
+│   │   └── audit_report.md
+│   ├── fintech/
+│   │   ├── vendor_assessment.md
+│   │   ├── compliance_audit.md
+│   │   ├── regulatory_response.md
+│   │   └── gap_analysis.md
+│   └── data_protection/
+│       ├── dpia_template.md
+│       ├── breach_notice.md
+│       └── compliance_checklist.md
+│
+├── api/
+│   ├── __init__.py
+│   ├── main.py                      # FastAPI app
+│   ├── routes.py                    # API endpoints
+│   ├── models.py                    # Request/response schemas
+│   └── middleware.py                # Authentication, logging
+│
+├── database/
+│   ├── __init__.py
+│   ├── models.py                    # SQLAlchemy models
+│   ├── connection.py                # DB connection
+│   └── queries.py                   # Common queries
+│
+├── utils/
+│   ├── __init__.py
+│   ├── sector_manager.py            # Sector switching logic
+│   ├── file_handler.py              # File operations
+│   ├── logger.py                    # Logging utilities
+│   └── validators.py                # Input validation
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_agents.py               # Agent unit tests
+│   ├── test_tools.py                # Tool unit tests
+│   ├── test_integration.py          # End-to-end tests
+│   ├── test_parsing.py              # Parser validation
+│   ├── test_retrieval.py            # Retriever validation
+│   └── fixtures/                    # Test data
+│
+├── scripts/
+│   ├── setup_environment.py         # Initial setup
+│   ├── ingest_laws.py               # Batch law ingestion
+│   ├── test_sector_switch.py        # Test sector switching
+│   └── validate_structure.py        # Validate all folders exist
+│
+├── docs/
+│   ├── ARCHITECTURE.md              # System design
+│   ├── AGENTS.md                    # Agent descriptions
+│   ├── SETUP.md                     # Installation guide
+│   ├── USAGE.md                     # How to use
+│   └── API_REFERENCE.md             # API docs
+│
+├── README.md                        # Project overview
+└── .github/
+    └── workflows/
+        └── tests.yml                # CI/CD pipeline
+
